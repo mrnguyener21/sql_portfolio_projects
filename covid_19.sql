@@ -46,4 +46,40 @@ from covid19_us_cases
 group by "State"
 order by new_cases_to_total_cases_percentage_ratio desc;
 
+-- 7. what is the average total cases per state
+select "State", avg(total_cases) average_total_cases
+from covid19_us_cases
+group by "State"
+order by average_total_cases desc;
 
+--Adding Additional Year and Month column based on Date Columnn for Deeper Analysis
+
+alter table covid19_us_cases
+add "Year" int,
+add "Month" int
+
+update covid19_us_cases
+set "Year" = date_part('month',  "Date")
+
+update covid19_us_cases
+set "Month" = date_part('month',  "Date")
+
+-- 8. Which months had the most amount of new cases in 2020
+select "Month", sum(new_cases)
+from covid19_us_cases
+where "Year" = '2020'
+group by "Month"
+order by sum(new_cases) desc;
+-- 9. Which month had the most amount of new cases in 2021
+select "Month", sum(new_cases)
+from covid19_us_cases
+where "Year" = '2021'
+group by "Month"
+order by sum(new_cases) desc;
+
+
+-- 10. Which month had the most amount of new cases per state in 2021 so far
+
+-- 11. Which month had the least amount of new cases per state in 2020
+
+-- 12. Which month had the least amount of new cases per state in 2021
