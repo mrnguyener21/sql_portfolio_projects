@@ -78,8 +78,36 @@ group by "Month"
 order by sum(new_cases) desc;
 
 
--- 10. Which month had the most amount of new cases per state in 2021 so far
+-- 10. Which state had the most  new cases in month
+select  "State", max(sum_new_cases) max_sum_new_cases
+from (
+	select "State", "Year", "Month", sum(new_cases) sum_new_cases
+	from covid19_us_cases 
+	where "Year" = '2020'
+	group by "State", "Year", "Month"
+	) sum_covid_19_us_cases
+group by "State"
+order by max_sum_new_cases desc;
 
--- 11. Which month had the least amount of new cases per state in 2020
+-- 11. Which state had the most  new cases in a month in 2021
+select  "State", max(sum_new_cases) max_sum_new_cases
+from (
+	select "State", "Year", "Month", sum(new_cases) sum_new_cases
+	from covid19_us_cases 
+	where "Year" = '2021'
+	group by "State", "Year", "Month"
+	) sum_covid_19_us_cases
+group by "State"
+order by max_sum_new_cases desc;
 
--- 12. Which month had the least amount of new cases per state in 2021
+-- Which state had the most  new cases in a month in 2021
+with cte_cases as (
+	select "State", "Year", "Month", sum(new_cases) sum_new_cases, row_number() over(partition by "State" order by sum(new_cases) desc) "row_number"
+	from covid19_us_cases 
+	where "Year" = '2020'
+	group by "State", "Year", "Month"
+ 	order by "sum_new_cases" desc
+	)
+select * 
+from cte_cases
+where "row_number" = 1
