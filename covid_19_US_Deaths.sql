@@ -100,11 +100,12 @@ with cte_deaths as (
 select *
 from cte_deaths
 
---what is the overall new deaths to total deaths percentage for each state 
-
-
 --what is the average total deaths per state
-
+--what is the average total deaths per state
+select "State", avg(total_deaths)
+from covid19_us_deaths
+group by "State"
+order by "State"
 
 
 -- which months had the most amount of new deaths in 2020
