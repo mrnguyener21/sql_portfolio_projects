@@ -86,8 +86,19 @@ order by "Date" asc, "new_to_total_deaths_percentage_ratio" desc
 
 
 
---what is the new deaths to total deaths percentage for each date in each state
-
+--what is the new deaths to total deaths percentage for each month in each state(exclude rates that are 0)
+with cte_deaths as (
+	select "Month","Year","State",
+		max(total_deaths) max_total_deaths, 
+		sum(new_deaths) sum_new_deaths,
+		(sum(new_deaths)/max(total_deaths)) * 100 as new_to_total_deaths_percentage_ratio
+	from covid19_us_deaths
+	group by "Month", "Year", "State"
+	having sum(new_deaths) != 0
+	order by "Month" asc, "State" asc, "Year" desc
+)
+select *
+from cte_deaths
 
 --what is the overall new deaths to total deaths percentage for each state 
 
