@@ -11,11 +11,23 @@ update covid19_us_deaths
 set "Month" = date_part('month',  "Date")
 
 select * from covid19_us_cases
+
 --Which States contained the most amount of total deaths overall
+select "State", max(total_deaths) max_total_deaths
+from covid19_us_deaths
+group by "State"
+order by max_total_deaths desc;
 
 --which states contained the most amount of new deaths in one day
+with cte_deaths as (
+	select "State", "Date", new_deaths, row_number() over(partition by "State" order by new_deaths desc) "row_number"
+	from covid19_us_deaths
+	order by "State" asc, new_deaths desc
+)
 
-
+select * from cte_deaths
+where row_number = 1
+order by new_deaths desc;
 --which states contains the least amount of total deaths overall
 
 
