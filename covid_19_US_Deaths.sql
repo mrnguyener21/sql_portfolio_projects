@@ -5,7 +5,7 @@ add "Year" int,
 add "Month" int
 
 update covid19_us_deaths
-set "Year" = date_part('month',  "Date")
+set "Year" = date_part('"Year"',  "Date")
 
 update covid19_us_deaths
 set "Month" = date_part('month',  "Date")
@@ -28,8 +28,30 @@ with cte_deaths as (
 select * from cte_deaths
 where row_number = 1
 order by new_deaths desc;
---which states contains the least amount of total deaths overall
 
+--which states contained the most amount of new deaths in one day in 2020
+with cte_deaths as (
+	select "State","Year", "Date", new_deaths, row_number() over(partition by "State" order by new_deaths desc) "row_number"
+	from covid19_us_deaths
+	where "Year" = 2020
+	order by "State" asc, new_deaths desc
+)
+
+select * from cte_deaths
+where row_number = 1
+order by new_deaths desc;
+
+--which states contained the most amount of new deaths in one day in 2021
+with cte_deaths as (
+	select "State","Year", "Date", new_deaths, row_number() over(partition by "State" order by new_deaths desc) "row_number"
+	from covid19_us_deaths
+	where "Year" = 2021
+	order by "State" asc, new_deaths desc
+)
+
+select * from cte_deaths
+where row_number = 1
+order by new_deaths desc;
 
 --which states contained the least amount of new deaths in one day after 2021
 
