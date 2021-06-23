@@ -150,3 +150,53 @@ with cte_cases as (
 select * 
 from cte_cases
 where "row_number" = 1
+
+
+--What were the monthly averages for each month for each state in 2020(do not include averages that are 0)
+with cte_cases as (
+	select "State", "Year", "Month", avg(new_cases) avg_new_cases 
+	from covid19_us_cases 
+	where "Year" = '2020'
+	group by "State", "Year", "Month"
+	having avg(new_cases) > 0
+ 	order by "Month" asc
+	)
+	
+select * 
+from cte_cases
+
+--What were the monthly averages for each month for each state in 2021
+with cte_cases as (
+	select "State", "Year", "Month", avg(new_cases) avg_new_cases 
+	from covid19_us_cases 
+	where "Year" = '2021'
+	group by "State", "Year", "Month"
+	having avg(new_cases) > 0
+ 	order by "Month" asc
+	)
+	
+select * 
+from cte_cases
+
+--What was the monthly average for the United States in 2020(exclude months where the average is 0)
+select "Year", "Month", avg(new_cases) avg_new_cases
+from covid19_us_cases
+where "Year" = 2020
+group by "Year","Month"
+having avg(new_cases) > 0
+order by "Month" asc;
+
+--What was the monthly average for the United States in 2021 so far (exclude months where the average is 0)
+select "Year", "Month", avg(new_cases) avg_new_cases
+from covid19_us_cases
+where "Year" = 2021
+group by "Year","Month"
+having avg(new_cases) > 0
+order by "Month" asc;
+
+
+--What are the yearly averages for new cases for each State
+select "Year", "State", avg(new_cases) avg_new_cases
+from covid19_us_cases
+group by "Year", "State"
+order by "State" asc, "Year" asc;
