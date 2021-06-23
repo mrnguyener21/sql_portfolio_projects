@@ -1,4 +1,16 @@
 
+--Adding Additional Year and Month column based on Date Columnn for Deeper Analysis
+alter table covid19_us_deaths
+add "Year" int,
+add "Month" int
+
+update covid19_us_deaths
+set "Year" = date_part('month',  "Date")
+
+update covid19_us_deaths
+set "Month" = date_part('month',  "Date")
+
+select * from covid19_us_cases
 --Which States contained the most amount of total deaths overall
 
 --which states contained the most amount of new deaths in one day
@@ -19,7 +31,6 @@
 --what is the average total deaths per state
 
 
---Adding Additional Year and Month column based on Date Columnn for Deeper Analysis
 
 -- 8. Which months had the most amount of new deaths in 2020
 
