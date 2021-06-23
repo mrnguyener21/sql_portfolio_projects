@@ -52,8 +52,20 @@ with cte_deaths as (
 select * from cte_deaths
 where row_number = 1
 order by new_deaths desc;
+--which states contained the least amount of new deaths in one day after 2021
+with cte_deaths as (
+	select "State","Year", "Date", new_deaths, row_number() over(partition by "State" order by new_deaths desc) "row_number"
+	from covid19_us_deaths
+	where "Year" = 2021
+	order by "State" asc, new_deaths desc
+)
+
+select * from cte_deaths
+where row_number = 1
+order by new_deaths desc;
 
 --what is the new deaths to total deaths percentage for each date in each state (exclude pecentage ratios that are 0)
+
 ALTER TABLE covid19_us_deaths ALTER COLUMN total_deaths TYPE float8;
 ALTER TABLE covid19_us_deaths ALTER COLUMN new_deaths TYPE float8;
 
@@ -72,7 +84,6 @@ from cte_deaths
 where new_to_total_deaths_percentage_ratio != 0
 order by "Date" asc, "new_to_total_deaths_percentage_ratio" desc
 
---which states contained the least amount of new deaths in one day after 2021
 
 
 --what is the new deaths to total deaths percentage for each date in each state
@@ -85,15 +96,15 @@ order by "Date" asc, "new_to_total_deaths_percentage_ratio" desc
 
 
 
--- 8. Which months had the most amount of new deaths in 2020
+-- which months had the most amount of new deaths in 2020
 
--- 9. Which month had the most amount of new deaths in 2021
-
-
--- 10. Which state had the most  new deaths in month
+-- which month had the most amount of new deaths in 2021
 
 
--- 11. Which state had the most  new deaths in a month in 2021
+-- wWhich state had the most  new deaths in month
+
+
+-- wWhich state had the most  new deaths in a month in 2021
 
 
 -- Which states had the most  new deaths in a month in 2020
