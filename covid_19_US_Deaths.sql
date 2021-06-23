@@ -53,6 +53,25 @@ select * from cte_deaths
 where row_number = 1
 order by new_deaths desc;
 
+--what is the new deaths to total deaths percentage for each date in each state (exclude pecentage ratios that are 0)
+ALTER TABLE covid19_us_deaths ALTER COLUMN total_deaths TYPE float8;
+ALTER TABLE covid19_us_deaths ALTER COLUMN new_deaths TYPE float8;
+
+with cte_deaths as(
+	select "Date", "State", total_deaths, new_deaths,
+	case
+	when new_deaths = 0 then 0
+	else (new_deaths/total_deaths) * 100
+	end as new_to_total_deaths_percentage_ratio
+from covid19_us_deaths
+order by "Date" asc, "new_to_total_deaths_percentage_ratio" desc
+)
+
+select * 
+from cte_deaths
+where new_to_total_deaths_percentage_ratio != 0
+order by "Date" asc, "new_to_total_deaths_percentage_ratio" desc
+
 --which states contained the least amount of new deaths in one day after 2021
 
 
