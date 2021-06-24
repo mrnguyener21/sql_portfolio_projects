@@ -134,18 +134,18 @@ where "row_number" = 1 or "row_number" = 2
 order by "State",sum_new_deaths
 
 
--- Which states had the most  new deaths in a month in 2021
-
-
--- Which states had the least  new deaths in a month in 2020
-
--- Which states had the least  new deaths in a month in 2021
-
-
---What were the monthly averages for each month for each state in 2020(do not include averages that are 0)
-
-
---What were the monthly averages for each month for each state in 2021
+--What were the monthly average of new deaths for each month for each state in 2020
+select "State", "Month", "Year", avg(new_deaths) average_new_deaths, row_number() over(partition by "State" order by sum(new_deaths) desc) "row_number"
+from covid19_us_deaths
+where "Year" = 2020
+group by "State", "Month", "Year"
+order by "State", "Month"
+--What were the monthly average of new deaths for each month for each state in 2021 
+select "State", "Month", "Year", avg(new_deaths) average_new_deaths, row_number() over(partition by "State" order by sum(new_deaths) desc) "row_number"
+from covid19_us_deaths
+where "Year" = 2021
+group by "State", "Month", "Year"
+order by "State", "Month"
 
 
 --What was the monthly average for the United States in 2020(exclude months where the average is 0)
