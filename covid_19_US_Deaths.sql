@@ -121,13 +121,17 @@ where "Year" = 2020
 group by "Month","Year"
 order by sum_new_deaths desc
 
--- wWhich state had the most  new deaths in month
-
-
--- wWhich state had the most  new deaths in a month in 2021
-
-
--- Which states had the most  new deaths in a month in 2020
+-- Which month had the most new deaths for each state
+with cte_deaths as (
+	select "State","Month", "Year", sum(new_deaths) sum_new_deaths, row_number() over(partition by "State" order by sum(new_deaths) desc) "row_number"
+	from covid19_us_deaths
+	group by "State", "Month", "Year"
+	order by "State", sum_new_deaths desc
+)
+select "State", "Month", "Year", sum_new_deaths
+from cte_deaths
+where "row_number" = 1 or "row_number" = 2
+order by "State",sum_new_deaths
 
 
 -- Which states had the most  new deaths in a month in 2021
