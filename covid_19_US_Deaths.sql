@@ -115,7 +115,11 @@ group by "Month","Year"
 order by sum_new_deaths desc
 
 -- which month had the most amount of new deaths in 2021
-
+select "Month", "Year", sum(new_deaths) sum_new_deaths
+from covid19_us_deaths
+where "Year" = 2020
+group by "Month","Year"
+order by sum_new_deaths desc
 
 -- wWhich state had the most  new deaths in month
 
