@@ -101,7 +101,6 @@ select *
 from cte_deaths
 
 --what is the average total deaths per state
---what is the average total deaths per state
 select "State", avg(total_deaths)
 from covid19_us_deaths
 group by "State"
@@ -109,6 +108,11 @@ order by "State"
 
 
 -- which months had the most amount of new deaths in 2020
+select "Month", "Year", sum(new_deaths) sum_new_deaths
+from covid19_us_deaths
+where "Year" = 2020
+group by "Month","Year"
+order by sum_new_deaths desc
 
 -- which month had the most amount of new deaths in 2021
 
