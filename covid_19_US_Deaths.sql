@@ -135,27 +135,31 @@ order by "State",sum_new_deaths
 
 
 --What were the monthly average of new deaths for each month for each state in 2020
-select "State", "Month", "Year", avg(new_deaths) average_new_deaths, row_number() over(partition by "State" order by sum(new_deaths) desc) "row_number"
+select "State", "Month", "Year", avg(new_deaths) average_new_deaths
 from covid19_us_deaths
 where "Year" = 2020
 group by "State", "Month", "Year"
 order by "State", "Month"
+
 --What were the monthly average of new deaths for each month for each state in 2021 
-select "State", "Month", "Year", avg(new_deaths) average_new_deaths, row_number() over(partition by "State" order by sum(new_deaths) desc) "row_number"
+select "State", "Month", "Year", avg(new_deaths) average_new_deaths
 from covid19_us_deaths
 where "Year" = 2021
 group by "State", "Month", "Year"
 order by "State", "Month"
 
-
---What was the monthly average for the United States in 2020(exclude months where the average is 0)
-
-
---What was the monthly average for the United States in 2021 so far (exclude months where the average is 0)
-
+--What was the monthly average for the United States in 2020
+select "Month", "Year", avg(new_deaths) average_new_deaths
+from covid19_us_deaths
+group by "Month", "Year"
+order by "Month"
 
 
 --What are the yearly averages for new deaths for each State
+select "State", "Year", avg(new_deaths) average_new_deaths
+from covid19_us_deaths
+group by "State", "Year"
+order by "State"
 
 
 
