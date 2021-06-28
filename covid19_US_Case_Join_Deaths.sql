@@ -11,11 +11,29 @@ from covid19_us_cases
 inner join covid19_us_deaths on covid19_us_cases."ID" = covid19_us_deaths."ID"
 order by covid19_us_cases."ID"
 
---What is the death to cases ratio in 2020
+--What is the death to cases percentage ratio in 2020
+with cte_cases_and_deaths as (
+    select  covid19_us_cases."State" "State", 
+            covid19_us_cases."Date" "Date", 
+            covid19_us_cases."Year" "Year",
+            covid19_us_cases."Month" "Month", 
+            covid19_us_cases.total_cases, 
+            covid19_us_cases.new_cases, 
+            covid19_us_deaths.total_deaths, 
+            covid19_us_deaths.new_deaths
+    from covid19_us_cases
+    inner join covid19_us_deaths on covid19_us_cases."ID" = covid19_us_deaths."ID"
+    order by covid19_us_cases."ID"
+)
 
---what is the death to cases ratio so far in 2021
+select "Year", (max(total_deaths)/max(total_cases))*100 total_death_to_total_cases_percentage_ratio
+from cte_cases_and_deaths
+group by "Year"
+order by "Year"
 
---what is the monthly death to cases ratio for 2020 and 2021
+--what is the death to cases percentage ratio so far in 2021
 
---what is the monthly death to cases ratio for 2020 and 2021 for each state
+--what is the monthly death to cases percentage ratio for 2020 and 2021
+
+--what is the monthly death to cases percentage ratio for 2020 and 2021 for each state
 
