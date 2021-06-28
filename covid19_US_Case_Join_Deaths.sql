@@ -10,3 +10,12 @@ select  covid19_us_cases."State",
 from covid19_us_cases
 inner join covid19_us_deaths on covid19_us_cases."ID" = covid19_us_deaths."ID"
 order by covid19_us_cases."ID"
+
+--What is the death to cases ratio in 2020
+
+--what is the death to cases ratio so far in 2021
+
+--what is the monthly death to cases ratio for 2020 and 2021
+
+--what is the monthly death to cases ratio for 2020 and 2021 for each state
+
