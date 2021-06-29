@@ -142,7 +142,11 @@ with cte_cases_and_deaths as (
     order by covid19_us_cases."ID"
 )
 
-select *
+select "State","Month","Year",
+        case
+        when sum_new_cases = 0 then 0
+        else (sum_new_deaths/sum_new_cases) * 100 
+        end as deaths_to_case_percentage_ratio
 from (
     select "State","Month","Year",
             sum(new_deaths) sum_new_deaths,
@@ -150,6 +154,5 @@ from (
     from cte_cases_and_deaths
     group by "State","Month","Year"
 ) as cte_cases_and_deaths_sum
-order by "State","Month","Year"
+order by "State","Month","Year";
 
---maybe i also need a subuery in the  from clause
