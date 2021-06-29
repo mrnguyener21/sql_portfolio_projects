@@ -111,7 +111,7 @@ with cte_cases as (
 
 select * 
 from cte_cases
-where "row_number" = 1
+where "row_number" = 1;
 
 -- Which states had the most  new cases in a month in 2021
 with cte_cases as (
