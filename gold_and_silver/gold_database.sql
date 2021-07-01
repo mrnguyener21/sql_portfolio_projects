@@ -8,13 +8,16 @@ from gold;
 --how much did gold go increase or decrease in price each year;
 
 
---what was growth rate of each year;
+--what was the inflation rate of each year;
 
 
---what was the growth rate for each century;
-
-
---how much did the price of gold increase by 2020 in dollar and percentage amount;
+--How much did the price of gold increase for each century along with the inflation rate
+select  "century",
+        max(gold_price) - min(gold_price) total_increase_in_gold_price,
+        concat(round((((max(gold_price) - min(gold_price)) / min(gold_price)) * 100):: numeric,2), '%') gold_price_inflation_rate
+from gold
+group by "century"
+order by "century";
 
 
 --What was the average price of gold for each century;
