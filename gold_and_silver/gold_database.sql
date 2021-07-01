@@ -27,4 +27,5 @@ group by "century"
 order by "century";
 
 --what is the overal average price of gold;
-
+select round(avg(gold_price)::numeric,2) overall_average_price_of_gold
+from gold;
