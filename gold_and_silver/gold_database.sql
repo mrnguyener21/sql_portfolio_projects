@@ -1,4 +1,6 @@
 --how much did the price of gold increase over the four centuries;
+select max(gold_price) - min(gold_price) total_increase_in_gold_price
+from gold
 
 --how much did gold go increase or decrease in price each YEAR;
 
