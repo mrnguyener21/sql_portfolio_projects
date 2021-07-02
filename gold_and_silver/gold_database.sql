@@ -5,8 +5,9 @@ select  min(gold_price) starting_gold_price,
         concat(round((((max(gold_price) - min(gold_price)) / min(gold_price)) * 100):: numeric,2), '%') gold_price_inflation_rate
 from gold;
 
---how much did gold go increase or decrease in price each year;
-
+--how much did gold_price increase or decrease in price each year;
+select "year",gold_price, 
+from gold;
 
 --what was the inflation rate of each year;
 
