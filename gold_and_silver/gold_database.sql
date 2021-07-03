@@ -1,3 +1,5 @@
+select * from gold;
+
 --how much did the price of gold increase by 2020 along with the inflation rate;
 select  min(gold_price) starting_gold_price,
         max(gold_price) current_gold_price,
@@ -6,9 +8,13 @@ select  min(gold_price) starting_gold_price,
 from gold;
 
 --how much did gold_price increase or decrease in price each year;
-select "year",gold_price, 
-from gold;
+with cte as (
+    select "year", gold_price as previous_year_gold_price
+    from gold
+    where id != 1;
+)
 
+select previous_year_gold_price from cte;
 --what was the inflation rate of each year;
 
 
@@ -30,3 +36,4 @@ order by "century";
 --what is the overal average price of gold;
 select round(avg(gold_price)::numeric,2) overall_average_price_of_gold
 from gold;
+
