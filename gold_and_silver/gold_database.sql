@@ -29,7 +29,7 @@ from gold;
 --  set previous_year_gold_price = gold_price
 
 --DELETE , REUPLOAD AND RECONNECT THE GOLD DATABASE
---LOOK INTO LAG FUNCTION AND FIX DATASET
+--LOOK INTO LAG FUNCTION AND FIX DATASET;
 
 --what was the inflation rate of each year;
 
