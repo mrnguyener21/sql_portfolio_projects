@@ -8,28 +8,22 @@ select  min(gold_price) starting_gold_price,
 from gold;
 
 -- how much did gold_price increase or decrease in price each year;
--- with cte_gold_price as (
---     select "id","year", gold_price previous_gold_price
---     from gold
---     where id != 1 
--- )
-
--- select * from cte_gold_price;
-
--- select  gold1."year", 
---         gold1.gold_price, 
---         gold2."year", 
---         gold2.gold_price previous_year_gold_price,
---         gold2.row_number() over(partition by "year") "row_number"
+-- select gold1."year", gold1.gold_price, gold2."year", gold2.gold_price previous_gold_price
 -- from gold gold1, gold gold2
--- where gold2.id != 1
--- alter table gold
--- add previous_year_gold_price float8;
---  update gold
---  set previous_year_gold_price = gold_price
+-- where gold2."id" != 1
+-- order by gold1."year";
 
---DELETE , REUPLOAD AND RECONNECT THE GOLD DATABASE
---LOOK INTO LAG FUNCTION AND FIX DATASET;
+
+select "year" current_year,
+        gold_price current_gold_price,
+        lag(year) over (order by "year") previous_year,
+        lag(gold_price) over (order by "year") previous_year_gold_price
+from gold;
+
+
+
+
+
 
 --what was the inflation rate of each year;
 
