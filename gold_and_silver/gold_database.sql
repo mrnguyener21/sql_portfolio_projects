@@ -19,11 +19,9 @@ select current_year,
         current_gold_price,
         previous_year,
         previous_year_gold_price,
-        round((current_gold_price - previous_year_gold_price):: numeric,2) gold_price_difference
-        round((((current_gold_price - previous_year_gold_price)/previous_year_gold_price)):: numeric,2) gold_price_difference
+        round((current_gold_price - previous_year_gold_price):: numeric,2) gold_price_difference,
+        concat(round((((current_gold_price - previous_year_gold_price)/previous_year_gold_price)*100):: numeric,2),'%') inflation_rate_percentage
 from cte_gold;
-
-
 
 --How much did the price of gold increase for each century along with the inflation rate
 select  "century",
