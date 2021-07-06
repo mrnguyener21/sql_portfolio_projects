@@ -7,7 +7,7 @@ select  min(gold_price) starting_gold_price,
         concat(round((((max(gold_price) - min(gold_price)) / min(gold_price)) * 100):: numeric,2), '%') gold_price_inflation_rate
 from gold;
 
--- how much did gold_price increase or decrease in price each year;
+-- how much did gold_price increase or decrease in price each year along with the inflation rate for each year
 with cte_gold as(
     select "year" current_year,
             gold_price current_gold_price,
@@ -20,13 +20,9 @@ select current_year,
         previous_year,
         previous_year_gold_price,
         round((current_gold_price - previous_year_gold_price):: numeric,2) gold_price_difference
+        round((((current_gold_price - previous_year_gold_price)/previous_year_gold_price)):: numeric,2) gold_price_difference
 from cte_gold;
 
-
-
-
-
---what was the inflation rate of each year;
 
 
 --How much did the price of gold increase for each century along with the inflation rate
