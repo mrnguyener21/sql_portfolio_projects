@@ -8,18 +8,19 @@ select  min(gold_price) starting_gold_price,
 from gold;
 
 -- how much did gold_price increase or decrease in price each year;
--- select gold1."year", gold1.gold_price, gold2."year", gold2.gold_price previous_gold_price
--- from gold gold1, gold gold2
--- where gold2."id" != 1
--- order by gold1."year";
-
-
-select "year" current_year,
-        gold_price current_gold_price,
-        lag(year) over (order by "year") previous_year,
-        lag(gold_price) over (order by "year") previous_year_gold_price
-from gold;
-
+with cte_gold as(
+    select "year" current_year,
+            gold_price current_gold_price,
+            lag(year) over (order by "year") previous_year,
+            lag(gold_price) over (order by "year") previous_year_gold_price
+    from gold
+)
+select current_year,
+        current_gold_price,
+        previous_year,
+        previous_year_gold_price,
+        round((current_gold_price - previous_year_gold_price):: numeric,2) gold_price_difference
+from cte_gold;
 
 
 
